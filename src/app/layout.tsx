@@ -3,9 +3,8 @@ import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import Header from "@/components/header";
 import { ptBR } from "@clerk/localizations";
-import { ClerkProvider } from '@clerk/nextjs'
-import { ThemeProvider } from "@/components/theme_provider"
-
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "@/components/theme_provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
