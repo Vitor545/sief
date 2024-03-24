@@ -35,14 +35,14 @@ export default function Video(props: IVideoProps) {
             !loadingVideo && "animate-none"
           )}
         >
-          <Vimeo
+          {/* <Vimeo
             video="739081605"
             responsive
             showTitle={false}
             onReady={(e) => {
               setLoadingVideo(false);
             }}
-          />
+          /> */}
         </Skeleton>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
