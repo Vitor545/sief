@@ -26,7 +26,7 @@ export default function Video(props: IVideoProps) {
           )}
         >
           <Vimeo
-            video="739081605"
+            video="76979871"
             responsive
             color="#fff"
             showPortrait={false}
