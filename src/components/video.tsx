@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-export interface IVideoProps {}
+export interface IVideoProps { }
 
 export default function Video(props: IVideoProps) {
   const [loadingVideo, setLoadingVideo] = useState(true);
