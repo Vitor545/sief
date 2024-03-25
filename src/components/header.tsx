@@ -21,7 +21,7 @@ export default function Header(props: IHeaderProps) {
           </Link>
         </div>
         <div className="flex items-center gap-4 w-full justify-end">
-          <Input placeholder="Pesquisar" className="max-w-48 md:max-w-96 w-full" />
+          <Input placeholder="Pesquisar" className="max-w-48 md:max-w-96 w-full max-[430px]:hidden" />
           <ModeToggle />
           <ClerkLoading>
             <ReloadIcon className="h-5 w-5 text-muted-foreground animate-spin" />
