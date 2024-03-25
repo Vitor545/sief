@@ -6,38 +6,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Image from "next/image";
 import Breadcrump from "./breadcrumb";
 import Vimeo from "@u-wave/react-vimeo";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface IVideoProps {}
 
 export default function Video(props: IVideoProps) {
   const [loadingVideo, setLoadingVideo] = useState(true);
-  console.log(loadingVideo);
   return (
     <ShadCard className="w-full relative">
       <CardHeader>
-        {/* <iframe
-          src="https://player.vimeo.com/video/739081605?h=1d38369c58"
-          width="100%"
-          height="428px"
-          frameborder="0"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-        ></iframe> */}
         <Skeleton
           className={cn(
-            "w-full h-[458px] rounded-sm",
-            !loadingVideo && "animate-none"
+            "pt-[56.25%] relative rounded-sm",
+            !loadingVideo && "animate-none bg-transparent"
           )}
         >
           <Vimeo
             video="739081605"
             responsive
+            color="#fff"
+            showPortrait={false}
+            showByline={false}
+            transparent={false}
+            className="absolute top-0 left-0 right-0 bottom-0 w-full h-full"
             showTitle={false}
             onReady={(e) => {
               setLoadingVideo(false);
