@@ -14,14 +14,14 @@ export default function Header(props: IHeaderProps) {
   return (
     <header className="z-[9000] w-full  border-0 border-b-2 border-blend-darken fixed top-0 left-0 bg-background">
       <div className="px-6 flex h-20 w-full items-center justify-between">
-        <div className="flex items-center w-full">
+        <div className="flex items-center">
           <HamburgerMenuIcon className="w-4 h-4 mr-4 cursor-pointer" />
           <Link href="/home">
             <h5 className="font-semibold">SIEF</h5>
           </Link>
         </div>
         <div className="flex items-center gap-4 w-full justify-end">
-          <Input placeholder="Pesquisar" className="max-w-96 w-full" />
+          <Input placeholder="Pesquisar" className="max-w-48 md:max-w-96 w-full" />
           <ModeToggle />
           <ClerkLoading>
             <ReloadIcon className="h-5 w-5 text-muted-foreground animate-spin" />
