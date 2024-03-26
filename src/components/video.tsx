@@ -11,6 +11,8 @@ import Vimeo from "@u-wave/react-vimeo";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { Button } from "./ui/button";
 
 export interface IVideoProps { }
 
@@ -47,6 +49,10 @@ export default function Video(props: IVideoProps) {
           Elaboração na prática de como construir uma análise robusta de
           fechamento de DRE, Balanço e Fluxo de Caixa.
         </CardDescription>
+        <div className="flex items-center gap-2 min-[1180px]:hidden">
+          <Button variant={"outline"}><ArrowLeftIcon /></Button>
+          <Button variant={"outline"}><ArrowRightIcon /></Button>
+        </div>
       </CardContent>
     </ShadCard>
   );
