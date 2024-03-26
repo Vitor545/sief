@@ -1,6 +1,6 @@
 'use client'
 import * as React from "react";
-import { HamburgerMenuIcon, ReloadIcon } from "@radix-ui/react-icons";
+import { HamburgerMenuIcon, MagnifyingGlassIcon, ReloadIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import { ModeToggle } from "./mode_toggle";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 export interface IHeaderProps { }
 
 export default function Header(props: IHeaderProps) {
+  const [searchTerm, setSearchTerm] = React.useState("");
   const router = useRouter();
   return (
     <header className="z-[9000] w-full  border-0 border-b-2 border-blend-darken fixed top-0 left-0 bg-background">
@@ -24,7 +25,14 @@ export default function Header(props: IHeaderProps) {
           </Link>
         </div>
         <div className="flex items-center gap-4 w-full justify-end">
-          <Input onKeyDown={(e) => e.key === "Enter" && router.push('/search?name=' + e.currentTarget.value)}   placeholder="Pesquisar" className="max-w-48 md:max-w-96 w-full max-[430px]:hidden" />
+          <div className="flex items-center gap-4 w-full justify-end">
+            <Input onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={(e) => e.key === "Enter" && e.currentTarget.value && router.push('/search?name=' + e.currentTarget.value)} placeholder="Pesquisar" className="max-w-48 md:max-w-sm w-full max-[370px]:hidden max-[500px]:max-w-24" />
+            <Button className="p-0 w-8 h-8 max-[370px]:hidden" size={"sm"} onClick={() => {
+              searchTerm && router.push('/search?name=' + searchTerm);
+            }}>
+              <MagnifyingGlassIcon className="h-5 w-5" />
+            </Button >
+          </div>
           <ModeToggle />
           <ClerkLoading>
             <ReloadIcon className="h-5 w-5 text-muted-foreground animate-spin" />
