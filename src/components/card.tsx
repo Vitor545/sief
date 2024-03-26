@@ -17,7 +17,7 @@ export interface ICardProps {
 
 export default function Card({ }: ICardProps) {
     return (
-        <Link href={'/course/1'} className="justify-center flex w-full">
+        <Link href={'/course/1/chapter/1'} className="justify-center flex w-full">
             <ShadCard className="max-w-96 w-full">
                 <CardHeader>
                     <div className="relative">
