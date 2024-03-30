@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { GeistSans } from "geist/font/sans";
-import Header from "@/components/header";
 import { ptBR } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from "@/components/theme_provider";
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <ToastContainer />
           </ThemeProvider>
         </body>
       </html>

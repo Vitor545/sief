@@ -3,8 +3,11 @@ const nextConfig = {
     images: {
         remotePatterns: [
           {
-            hostname: 'media.istockphoto.com',
+            hostname: 'i.ibb.co',
           },
+          {
+            hostname: 'media.istockphoto.com',
+          }
         ],
       },
 };

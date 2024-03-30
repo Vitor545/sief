@@ -1,19 +1,19 @@
-import { checkRole } from "@/lib/roles"
+import { CourseDto } from "@/interfaces/CourseDto"
+import conn from "@/lib/db"
 import { NextResponse } from 'next/server'
 
-type ResponseData = {
-    message: string
-}
-
 export async function GET(req: Request) {
+    const client = await conn.connect()
     try {
-    if(checkRole("teacher")) {
-        return new NextResponse(JSON.stringify("É professor"), { status: 200 })
-    }
-    return new NextResponse(JSON.stringify("Não é professor"), { status: 200 })
+        const selectAllCourses = "SELECT courses.courseid, courses.coursename, courses.courseimage, users.username AS creator, COUNT(lessons), courseprogress.completedlessons, courseprogress.courseblocked FROM courses LEFT JOIN lessons ON lessons.courseid = courses.courseid LEFT JOIN users ON users.userid = courses.creatorid LEFT JOIN courseprogress ON courseprogress.courseid = courses.courseid GROUP BY courses.courseid, users.userid, courseprogress.courseblocked, courseprogress.completedlessons ORDER BY courses.courseid"
+        var coursesAll = await client.query<CourseDto>(selectAllCourses)
+        return NextResponse.json(coursesAll.rows, { status: 200 })
     } catch (error) {
         console.log("[COURSE]", error)
-        return new NextResponse('Internal server error', { status: 500 })
+        return new NextResponse('Erro ao buscar os cursos', { status: 500 })
+    }
+    finally {
+        client.release()
     }
 }
 
