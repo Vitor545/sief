@@ -2,10 +2,11 @@
 import { Progress as ShadProgress } from "@/components/ui/progress";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Button } from "./ui/button";
-import { Progress, Reaction } from "@/interfaces/CourseDto";
+import { Progress } from "@/interfaces/CourseDto";
 import { useState } from "react";
 import { api } from "@/lib/axios";
 import { useAuth } from "@clerk/nextjs";
+import { Reaction } from "@/interfaces/LessonDto";
 
 export interface ICheckButtonProps {
     progress: Progress

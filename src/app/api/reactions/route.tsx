@@ -1,4 +1,4 @@
-import { Reaction } from "@/interfaces/CourseDto";
+import { Reaction } from "@/interfaces/LessonDto";
 import prisma from "@/lib/prismaClient"
 import { NextResponse } from 'next/server'
 

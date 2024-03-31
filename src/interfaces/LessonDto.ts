@@ -41,5 +41,5 @@ export interface LessonDto {
     reactionid: number;
     userid: string;
     lessonid: number;
-    reactiontype: string;
+    reactiontype: 'Muito_ruim' | 'Ruim' | 'Razo_vel' | 'Muito_bom' | 'Excelente';
   }
