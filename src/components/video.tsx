@@ -13,11 +13,21 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
-export interface IVideoProps { }
+export interface IVideoProps {
+  lessonName: string;
+  vimeoid: string;
+  lessonDescription: string;
+  findLast: number
+  findNext: number
+  courseName: string;
+  courseId: string
+}
 
-export default function Video(props: IVideoProps) {
+export default function Video({ lessonName, lessonDescription, vimeoid, courseName, findLast, findNext, courseId }: IVideoProps) {
   const [loadingVideo, setLoadingVideo] = useState(true);
+  const router = useRouter();
   return (
     <ShadCard className="w-full relative">
       <CardHeader>
@@ -28,7 +38,7 @@ export default function Video(props: IVideoProps) {
           )}
         >
           <Vimeo
-            video="76979871"
+            video={vimeoid}
             responsive
             color="#fff"
             showPortrait={false}
@@ -43,15 +53,12 @@ export default function Video(props: IVideoProps) {
         </Skeleton>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <Breadcrump />
-        <CardTitle>Análise do fechamento mensal de resultados</CardTitle>
-        <CardDescription>
-          Elaboração na prática de como construir uma análise robusta de
-          fechamento de DRE, Balanço e Fluxo de Caixa.
-        </CardDescription>
+        <Breadcrump courseName={courseName} />
+        <CardTitle>{lessonName}</CardTitle>
+        <CardDescription>{lessonDescription}</CardDescription>
         <div className="flex items-center gap-2 min-[1180px]:hidden">
-          <Button variant={"outline"}><ArrowLeftIcon /></Button>
-          <Button variant={"outline"}><ArrowRightIcon /></Button>
+          <Button onClick={() => router.push(`/course/${courseId}/chapter/${findLast}`)} variant={"outline"}><ArrowLeftIcon /></Button>
+          <Button onClick={() => router.push(`/course/${courseId}/chapter/${findNext}`)} variant={"outline"}><ArrowRightIcon /></Button>
         </div>
       </CardContent>
     </ShadCard>

@@ -1,19 +1,45 @@
-import { CourseDto } from "@/interfaces/CourseDto"
-import conn from "@/lib/db"
+import prisma from "@/lib/prismaClient"
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
-    const client = await conn.connect()
     try {
-        const selectAllCourses = "SELECT courses.courseid, courses.coursename, courses.courseimage, users.username AS creator, COUNT(lessons), courseprogress.completedlessons, courseprogress.courseblocked FROM courses LEFT JOIN lessons ON lessons.courseid = courses.courseid LEFT JOIN users ON users.userid = courses.creatorid LEFT JOIN courseprogress ON courseprogress.courseid = courses.courseid  GROUP BY courses.courseid, users.userid, courseprogress.courseblocked, courseprogress.completedlessons HAVING  COUNT(lessons) = courseprogress.completedlessons ORDER BY courses.courseid"
-        var { rows } = await client.query<CourseDto>(selectAllCourses)
-        return NextResponse.json(rows, { status: 200 })
+        var coursesBlocked = await prisma.courses.findMany({
+            include: {
+                progress: { orderBy: { dataconclusao: 'desc' }, where: { userid: 'user_2e64NDbrFEdVY4IlfJxmyjmZzqZ' } },
+                lessons: { orderBy: { orderlesson: 'asc' } }
+            },
+            orderBy: { ordercourse: 'asc' }
+        })
+        return NextResponse.json(coursesBlocked.filter(course => course.progress.length === course.lessons.length), { status: 200 })
     } catch (error) {
         console.log("[COURSE]", error)
         return new NextResponse('Erro ao buscar os cursos', { status: 500 })
+    } finally {
+        await prisma.$disconnect()
     }
-    finally {
-        client.release()
+}
+
+
+export async function POST(req: Request) {
+    try {
+        const { lessonid, courseid, userid }: { lessonid: number, courseid: number, userid: string } = await req.json();
+        if (!userid || !lessonid || !courseid) {
+            return new NextResponse("Algum dado é faltando para criar a reação", { status: 400 })
+        }
+        await prisma.progress.create({
+            data: {
+                userid: userid,
+                lessonid: lessonid,
+                completed: true,
+                courseid: courseid
+            }
+        })
+        return NextResponse.json('Progresso criado', { status: 200 })
+    } catch (error) {
+        console.log("[COURSE]", error)
+        return new NextResponse('Erro ao buscar os cursos', { status: 500 })
+    } finally {
+        await prisma.$disconnect()
     }
 }
 

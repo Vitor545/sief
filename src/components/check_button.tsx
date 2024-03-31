@@ -1,24 +1,75 @@
-import { Progress } from "@/components/ui/progress";
+'use client'
+import { Progress as ShadProgress } from "@/components/ui/progress";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Button } from "./ui/button";
+import { Progress, Reaction } from "@/interfaces/CourseDto";
+import { useState } from "react";
+import { api } from "@/lib/axios";
+import { useAuth } from "@clerk/nextjs";
 
 export interface ICheckButtonProps {
+    progress: Progress
+    reactions: Reaction
+    lessonid: number
+    courseid: number
 }
 
-export default function CheckButton({ }: ICheckButtonProps) {
+const reactionEmoji = [
+    {
+        value: "Muito_ruim",
+        emoji: '😡'
+    },
+    {
+        value: "Ruim",
+        emoji: '🙁'
+    },
+    {
+        value: "Razo_vel",
+        emoji: '😑'
+    },
+    {
+        value: "Muito_bom",
+        emoji: '🙂'
+    },
+    {
+        value: "Excelente",
+        emoji: '😀'
+    }
+] as const
+
+export default function CheckButton({ progress, reactions, lessonid, courseid }: ICheckButtonProps) {
+    const { userId } = useAuth()
+    const [react, setReact] = useState<Reaction['reactiontype']>(reactions?.reactiontype ?? null)
+    const [finished, setFinished] = useState(progress?.completed);
+
+    const requestReaction = async (label: Reaction['reactiontype']) => {
+        await api.post('/reactions', { lessonid: lessonid, userid: userId, reactiontype: label })
+    }
+
+    const requestFinish = async () => {
+        await api.post('/course/finished', { lessonid: lessonid, userid: userId, courseid: courseid  })
+    }
+
+
     return (
         <div className="flex flex-col gap-4 w-72">
-            <ToggleGroup type="single">
-                <ToggleGroupItem className="text-xl cursor-pointer" value="a">😡</ToggleGroupItem>
-                <ToggleGroupItem className="text-xl cursor-pointer" value="b">🙁</ToggleGroupItem>
-                <ToggleGroupItem className="text-xl cursor-pointer" value="c">😑</ToggleGroupItem>
-                <ToggleGroupItem className="text-xl cursor-pointer" value="d">🙂</ToggleGroupItem>
-                <ToggleGroupItem className="text-xl cursor-pointer" value="f">😀</ToggleGroupItem>
+            <ToggleGroup value={react} type="single">
+                {reactionEmoji.map(({ value, emoji }) => (
+                    <ToggleGroupItem onClick={() => {
+                        setReact(value)
+                        requestReaction(value)
+                    }} key={value} className="text-xl cursor-pointer" value={value}>{emoji}</ToggleGroupItem>
+                ))}
             </ToggleGroup>
-            <Button variant={"outline"}>Marcar como concluído</Button>
+            <Button onClick={() => {
+                if (!finished) {
+                    setFinished(!finished)
+                    requestFinish()
+                }
+            }} variant={finished ? "default" : "outline"}>{finished ? "Concluído" : "Marcar como concluído"}</Button>
             <div className="flex items-center gap-2">
-                <Progress value={0} />
-                <p className="text-neutral-400 text-sm">0%</p>
+                <ShadProgress value={finished ? 100 : 0} />
+                <p className="text-neutral-400 text-sm">{finished ? '100%' : '0%'}</p>
             </div>
         </div>
     );

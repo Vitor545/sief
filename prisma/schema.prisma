@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model comments {
+  commentid   Int       @id @default(autoincrement())
+  userid      String?
+  lessonid    Int?
+  commenttext String?
+  commentdate DateTime? @default(now()) @db.Timestamp(6)
+  lessons     lessons?  @relation(fields: [lessonid], references: [lessonid], onDelete: NoAction, onUpdate: NoAction)
+  usuarios    usuarios? @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "public_comments_userid_fkey")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model courses {
+  courseid          Int        @id
+  coursename        String?    @db.VarChar(100)
+  courseimage       String?    @db.VarChar(255)
+  creatorid         String?
+  ordercourse       Int?
+  blocked           Boolean    @default(false)
+  descriptioncourse String?
+  usuarios          usuarios?  @relation(fields: [creatorid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "public_courses_creatorid_fkey")
+  lessons           lessons[]
+  progress          progress[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model lessons {
+  lessonid          Int         @id
+  courseid          Int?
+  lessontitle       String?     @db.VarChar(100)
+  vimeoid           String?     @db.VarChar(50)
+  lessonimage       String?     @db.VarChar(255)
+  orderlesson       Int?
+  lessondescription String?
+  comments          comments[]
+  courses           courses?    @relation(fields: [courseid], references: [courseid], onDelete: NoAction, onUpdate: NoAction)
+  progress          progress[]
+  reactions         reactions[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model progress {
+  lessonprogressid Int       @id(map: "lessonprogress_pkey") @default(autoincrement())
+  userid           String?
+  completed        Boolean?  @default(false)
+  lessonid         Int?
+  dataconclusao    DateTime? @default(now()) @db.Timestamptz(6)
+  courseid         Int?
+  courses          courses?  @relation(fields: [courseid], references: [courseid], onDelete: NoAction, onUpdate: NoAction, map: "public_lessonprogress_courseid_fkey")
+  lessons          lessons?  @relation(fields: [lessonid], references: [lessonid], onDelete: NoAction, onUpdate: NoAction, map: "public_lessonprogress_lessonid_fkey")
+  usuarios         usuarios? @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "public_lessonprogress_userid_fkey")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model reactions {
+  reactionid   Int            @id @default(autoincrement())
+  userid       String?
+  lessonid     Int?
+  reactiontype reactionstype?
+  usuarios     usuarios?      @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "public_reactions_userid_fkey")
+  lessons      lessons?       @relation(fields: [lessonid], references: [lessonid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model usuarios {
+  userid    String      @id(map: "users_pkey")
+  username  String?     @db.VarChar(50)
+  usertype  usertype?   @default(student)
+  comments  comments[]
+  courses   courses[]
+  progress  progress[]
+  reactions reactions[]
+}
+
+enum enum_reactions_reactiontype {
+  Muito_ruim @map("Muito ruim")
+  Ruim
+  Razo_vel   @map("Razoável")
+  Muito_bom  @map("Muito bom")
+  Excelente
+}
+
+enum enum_usuarios_usertype {
+  student
+  teacher
+}
+
+enum reactionstype {
+  Muito_ruim @map("Muito ruim")
+  Ruim
+  Razo_vel   @map("Razoável")
+  Muito_bom  @map("Muito bom")
+  Excelente
+}
+
+enum usertype {
+  student
+  teacher
+}

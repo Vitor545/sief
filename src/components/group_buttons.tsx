@@ -10,24 +10,24 @@ export default function GroupButtons() {
   const buttons = [
     {
       onclick: () => {
-        getAllCourses()
         setButtonActive(0)
+        getAllCourses()
       },
       text: "Disponíveis",
       id: 0
     },
     {
       onclick: () => {
-        getCoursesBlocked()
         setButtonActive(1)
+        getCoursesBlocked()
       },
       text: "Bloqueados",
       id: 1
     },
     {
       onclick: () => {
-        getCoursesFinished()
         setButtonActive(2)
+        getCoursesFinished()
       },
       text: "Concluídos",
       id: 2

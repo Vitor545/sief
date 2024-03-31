@@ -3,12 +3,18 @@ import CheckButton from "@/components/check_button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "./ui/button";
 import Comment from "./comment";
+import { Progress } from "@/interfaces/CourseDto";
+import { Reaction } from "@/interfaces/LessonDto";
 
 
 export interface ICommentsProps {
+    progress: Progress
+    reactions: Reaction
+    lessonid: number
+    courseid: number
 }
 
-export default function Comments(props: ICommentsProps) {
+export default function Comments({ progress, reactions, lessonid, courseid}: ICommentsProps) {
     return (
         <div className="flex gap-8  item w-full justify-between max-[1180px]:flex-col-reverse max-[1180px]:items-center">
             <div className="flex flex-col w-full">
@@ -27,7 +33,7 @@ export default function Comments(props: ICommentsProps) {
                 <Comment />
                 <Comment />
             </div>
-            <CheckButton />
+            <CheckButton courseid={courseid} lessonid={lessonid}  progress={progress} reactions={reactions} />
         </div>
     );
 }

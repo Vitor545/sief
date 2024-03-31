@@ -17,17 +17,19 @@ import { toast } from "react-toastify";
 export interface ICardProps {
     name: string;
     img: string;
-    completedlessons: string;
-    courseblocked?: boolean
-    count: string
+    blocked: boolean;
+    progress: number;
+    courseid?: number;
+    lessonid?: number;
+    descriptioncourse?: string;
 }
 
-export default function Card({ name, img, completedlessons, courseblocked, count }: ICardProps) {
+export default function Card({ name, img, blocked, progress, lessonid, courseid, descriptioncourse }: ICardProps) {
     const router = useRouter();
     return (
         <ShadCard className="max-w-96 w-full cursor-pointer" onClick={() => {
-            if (courseblocked) return toast.error('O curso ainda está bloqueado!', toastConfig.error);
-            router.push('/course/1/chapter/1')
+            if (blocked) return toast.error('O curso ainda está bloqueado!', toastConfig.error);
+            router.push(`/course/${courseid}/chapter/${lessonid}`)
         }}>
             <CardHeader>
                 <div className="relative">
@@ -37,7 +39,7 @@ export default function Card({ name, img, completedlessons, courseblocked, count
                         height={100}
                         className="w-full rounded-xl h-full object-cover max-h-56 min-h-56"
                     />
-                    {courseblocked && (
+                    {blocked && (
                         <div className="bg-background p-2 rounded-full absolute top-3 right-3">
                             <LockOpen1Icon className="w-4 h-4" />
                         </div>
@@ -46,10 +48,10 @@ export default function Card({ name, img, completedlessons, courseblocked, count
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 <CardTitle>{name}</CardTitle>
-                <CardDescription>Elaboração na prática de como construir uma análise robusta de fechamento de DRE, Balanço e Fluxo de Caixa.</CardDescription>
+                <CardDescription className="max-h-32 min-h-32 h-full text-ellipsis overflow-hidden">{descriptioncourse}</CardDescription>
             </CardContent>
             <CardFooter>
-                <Progress value={completedlessons === null ? 0 : (100 * parseInt(completedlessons)) / parseInt(count)} />
+                <Progress value={progress} />
             </CardFooter>
         </ShadCard>
     );

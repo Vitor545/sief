@@ -7,21 +7,21 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 export interface IBreadcrumpProps {
+    courseName: string
 }
 
-export default function Breadcrump(props: IBreadcrumpProps) {
+export default function Breadcrump({ courseName }: IBreadcrumpProps) {
     return (
         <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem>
-                    <BreadcrumbLink href="/">Início</BreadcrumbLink>
+                    <BreadcrumbLink href="/home">Início</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                    <BreadcrumbPage>Análise do fechamento mensal de resultados</BreadcrumbPage>
+                    <BreadcrumbPage>{courseName}</BreadcrumbPage>
                 </BreadcrumbItem>
             </BreadcrumbList>
         </Breadcrumb>
-
     );
 }

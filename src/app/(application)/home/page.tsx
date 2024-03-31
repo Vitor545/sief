@@ -17,8 +17,17 @@ export default function Home() {
     <main className="container sm:px-16 p-8 pt-28 flex flex-col gap-6">
       <GroupButtons />
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {courses?.map(({ courseid, coursename, courseimage, courseblocked, count, completedlessons }) => (
-          <Card key={courseid} name={coursename} img={courseimage} completedlessons={completedlessons} courseblocked={courseblocked} count={count} />
+        {courses?.map(({ courseid, descriptioncourse, coursename, courseimage, progress, lessons, blocked }) => (
+          <Card
+            key={courseid}
+            name={coursename}
+            img={courseimage}
+            blocked={blocked}
+            descriptioncourse={descriptioncourse}
+            progress={(progress.length*100)/lessons.length}
+            courseid={courseid}
+            lessonid={progress[0]?.lessonid || lessons[0]?.lessonid}
+          />
         ))}
       </div>
     </main>
