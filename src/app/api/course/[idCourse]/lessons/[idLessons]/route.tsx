@@ -1,13 +1,17 @@
 import prisma from "@/lib/prismaClient"
+import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request, { params: { idCourse, idLessons } }: { params: { idCourse: string, idLessons: string } }) {
     try {
+        const aut = auth()
+        console.log(aut)
+        console.log('userId', idCourse, idLessons)
         var coursesAll = await prisma.lessons.findUnique({
             where: { lessonid: Number(idLessons) },
             include: {
-                reactions: { where: { userid: 'user_2e64NDbrFEdVY4IlfJxmyjmZzqZ', lessonid: Number(idLessons) } },
-                progress: {  where: { userid: 'user_2e64NDbrFEdVY4IlfJxmyjmZzqZ', courseid: Number(idCourse), lessonid: Number(idLessons) } },
+                reactions: { where: { userid: 'userId', lessonid: Number(idLessons) } },
+                progress: {  where: { userid: 'userId', courseid: Number(idCourse), lessonid: Number(idLessons) } },
                 courses: { where: { courseid: Number(idCourse) }, include: { lessons: true }  }
             }
         })

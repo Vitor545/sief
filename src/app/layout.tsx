@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={ptBR}>
+    <ClerkProvider localization={ptBR} afterSignUpUrl={'/sign-in'}>
       <html lang="pt-BR">
         <body className={GeistSans.className}>
           <ThemeProvider

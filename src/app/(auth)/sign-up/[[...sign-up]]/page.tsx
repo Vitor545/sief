@@ -7,7 +7,6 @@ export default function Page() {
 
   return (
     <div className="w-full h-svh items-center flex justify-center">
-      <></>
       <SignUp
         afterSignUpUrl={"/home"}
         appearance={{

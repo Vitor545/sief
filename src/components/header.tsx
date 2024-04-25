@@ -42,13 +42,11 @@ export default function Header(props: IHeaderProps) {
           </ClerkLoading>
           <ClerkLoaded>
             <SignedIn>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton afterSignOutUrl="/sign-in" />
             </SignedIn>
             <SignedOut>
               <SignInButton
                 mode="redirect"
-                afterSignInUrl="/home"
-                afterSignUpUrl="/home"
               >
                 <Button size="lg">Entrar</Button>
               </SignInButton>

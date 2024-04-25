@@ -1,11 +1,13 @@
 import prisma from "@/lib/prismaClient"
+import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
     try {
+        const { userId } = auth()
         var coursesBlocked = await prisma.courses.findMany({
             include: {
-                progress: { orderBy: { dataconclusao: 'desc' }, where: { userid: 'user_2e64NDbrFEdVY4IlfJxmyjmZzqZ' } },
+                progress: { orderBy: { dataconclusao: 'desc' }, where: { userid: userId } },
                 lessons: { orderBy: { orderlesson: 'asc' } }
             },
             where: { blocked: true },
