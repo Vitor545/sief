@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export interface IHeaderProps { }
 
@@ -24,7 +25,7 @@ export default function Header(props: IHeaderProps) {
         <div className="flex items-center">
           <HamburgerMenuIcon className="w-4 h-4 mr-4 cursor-pointer" />
           <Link href="/home">
-            <h5 className="font-semibold">SIEF</h5>
+           <Image src='/logo.png' alt="sief logo" width={100} height={100} />
           </Link>
         </div>
         <div className="flex items-center gap-4 w-full justify-end">
