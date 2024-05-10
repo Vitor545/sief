@@ -38,6 +38,7 @@ export default function Header(props: IHeaderProps) {
             </Button >
           </div>
           <ModeToggle />
+          <Button size={"lg"} onClick={() => window.location.href = "https://sief-integrated-financial-education.netlify.app/"}>Voltar a página inicial</Button>
           <ClerkLoading>
             <ReloadIcon className="h-5 w-5 text-muted-foreground animate-spin" />
           </ClerkLoading>

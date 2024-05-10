@@ -1,6 +1,7 @@
 import { CourseDto } from '@/interfaces/CourseDto'
 import { LessonDto } from '@/interfaces/LessonDto'
 import { api } from '@/lib/axios'
+import { auth } from '@clerk/nextjs/server'
 import { create } from 'zustand'
 
 interface CourseState {
@@ -29,7 +30,8 @@ export const useCourseStore = create<CourseState>((set) => ({
             set((state) => ({ state: { ...state.state, course: course || [] } }))
         },
         getLesson: async (idCourse: string, idChapter: string) => {
-            const { data } = await api.get(`course/${idCourse}/lessons/${idChapter}`)
+            const aut = auth()
+            const { data } = await api.get(`course/${idCourse}/lessons/${idChapter}/${aut.userId}`)
             set((state) => ({ state: { ...state.state, lesson: data || {} } }))
         },
         getCoursesBlocked: async () => {

@@ -9,7 +9,7 @@ const nextConfig = {
             hostname: 'media.istockphoto.com',
           },
           {
-            hostname: 's1.static.brasilescola.uol.com.br',
+            hostname: 'images.unsplash.com',
           }, 
           {
             hostname: 's4.static.brasilescola.uol.com.br',
