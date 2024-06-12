@@ -16,6 +16,9 @@ model comments {
   commentdate DateTime? @default(now()) @db.Timestamp(6)
   lessons     lessons?  @relation(fields: [lessonid], references: [lessonid], onDelete: NoAction, onUpdate: NoAction)
   usuarios    usuarios? @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "public_comments_userid_fkey")
+  imageurl     String?
+  nameuser     String?
+  courseid   Int?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

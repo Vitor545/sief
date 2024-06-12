@@ -9,7 +9,6 @@ export default async function Course({ params: { idCourse, idChapter } }: { para
   const data = useCourseStore.getState().state.lesson;
   const findNext = data.courses.lessons[data.courses.lessons.findIndex((lesson: Lesson) => String(lesson.lessonid) === idChapter) + 1] ?? data.courses.lessons[0]
   const findLast = data.courses.lessons[data.courses.lessons.findIndex((lesson: Lesson) => String(lesson.lessonid) === idChapter) - 1] ?? data.courses.lessons[data.courses.lessons.length - 1]
-  console.log(data.courses.lessons.find(el => el.lessonid === Number(idChapter)))
   return (
     <main className="container p-16 pt-28 flex gap-6 max-[1180px]:flex-col max-[1180px]:px-8 max-[430px]:px-4">
       <div className="flex-1 items-end gap-6  flex-col flex max-[1180px]:items-center">

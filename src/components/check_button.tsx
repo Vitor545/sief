@@ -47,10 +47,8 @@ export default function CheckButton({
   lessonid,
   courseid,
 }: ICheckButtonProps) {
-  const { userId, ...rest } = useAuth();
+  const { userId } = useAuth();
   const { user } = useUser();
-  console.log()
-  console.log()
   const route = useRouter();
   const [react, setReact] = useState<Reaction["reactiontype"]>(
     reactions?.reactiontype ?? null
