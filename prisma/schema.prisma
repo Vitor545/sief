@@ -58,6 +58,8 @@ model progress {
   courses          courses?  @relation(fields: [courseid], references: [courseid], onDelete: NoAction, onUpdate: NoAction, map: "public_lessonprogress_courseid_fkey")
   lessons          lessons?  @relation(fields: [lessonid], references: [lessonid], onDelete: NoAction, onUpdate: NoAction, map: "public_lessonprogress_lessonid_fkey")
   usuarios         usuarios? @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "public_lessonprogress_userid_fkey")
+  imageurl     String?
+  nameuser     String?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

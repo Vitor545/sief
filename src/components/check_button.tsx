@@ -5,9 +5,11 @@ import { Button } from "./ui/button";
 import { Progress } from "@/interfaces/CourseDto";
 import { useState } from "react";
 import { api } from "@/lib/axios";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { Reaction } from "@/interfaces/LessonDto";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { toastConfig } from "@/utils/toast";
 
 export interface ICheckButtonProps {
   progress: Progress;
@@ -45,7 +47,10 @@ export default function CheckButton({
   lessonid,
   courseid,
 }: ICheckButtonProps) {
-  const { userId } = useAuth();
+  const { userId, ...rest } = useAuth();
+  const { user } = useUser();
+  console.log()
+  console.log()
   const route = useRouter();
   const [react, setReact] = useState<Reaction["reactiontype"]>(
     reactions?.reactiontype ?? null
@@ -65,6 +70,8 @@ export default function CheckButton({
       lessonid: lessonid,
       userid: userId,
       courseid: courseid,
+      imageUrl: user?.imageUrl,
+      fullName: user?.fullName,
     });
   };
 
@@ -90,6 +97,7 @@ export default function CheckButton({
         onClick={() => {
           if (!finished) {
             setFinished(!finished);
+            toast.success('Você ganhou 500XP!', toastConfig.success);
             requestFinish();
             route.refresh();
           }

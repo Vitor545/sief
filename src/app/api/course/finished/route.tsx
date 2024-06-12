@@ -24,7 +24,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
     try {
-        const { lessonid, courseid, userid }: { lessonid: number, courseid: number, userid: string } = await req.json();
+        const { lessonid, courseid, userid, imageUrl, fullName }: { lessonid: number, courseid: number, userid: string, fullName: string, imageUrl: string } = await req.json();
         if (!userid || !lessonid || !courseid) {
             return new NextResponse("Algum dado é faltando para criar a reação", { status: 400 })
         }
@@ -33,7 +33,9 @@ export async function POST(req: Request) {
                 userid: userid,
                 lessonid: lessonid,
                 completed: true,
-                courseid: courseid
+                courseid: courseid,
+                imageurl: imageUrl,
+                nameuser: fullName
             }
         })
         return NextResponse.json('Progresso criado', { status: 200 })

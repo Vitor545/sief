@@ -1,3 +1,4 @@
+'use client';
 import {
     Card as ShadCard,
     CardContent,
@@ -15,25 +16,25 @@ import { toast } from "react-toastify";
 
 
 export interface ICardProps {
-    name: string;
-    img: string;
+    name: string | null;
+    img: string | null;
     blocked: boolean;
     progress: number;
     courseid?: number;
     lessonid?: number;
-    descriptioncourse?: string;
+    descriptioncourse?: string | null;
 }
 
 export default function Card({ name, img, blocked, progress, lessonid, courseid, descriptioncourse }: ICardProps) {
     const router = useRouter();
     return (
         <ShadCard className="max-w-96 w-full cursor-pointer" onClick={() => {
-            if (blocked) return toast.error('O curso ainda está bloqueado!', toastConfig.error);
+            if (blocked) return toast.error('O curso em produção disponível em breve!', toastConfig.error);
             router.push(`/course/${courseid}/chapter/${lessonid}`)
         }}>
             <CardHeader>
                 <div className="relative">
-                    <Image src={img}
+                    <Image src={img || ''}
                         alt="sief logo"
                         width={100}
                         height={100}
