@@ -11,25 +11,26 @@ import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import SheetHeader from "./sheet-header";
 
 export interface IHeaderProps { }
 
 export default function Header(props: IHeaderProps) {
   const [searchTerm, setSearchTerm] = React.useState("");
   const pathname = usePathname();
-  const {userId} = useAuth();
+  const { userId } = useAuth();
   const router = useRouter();
   return (
-    <header className="z-[9000] w-full  border-0 border-b-2 border-blend-darken fixed top-0 left-0 bg-background">
+    <header className="z-[50] w-full  border-0 border-b-2 border-blend-darken fixed top-0 left-0 bg-background">
       <div className="px-6 flex h-20 w-full items-center justify-between">
         <div className="flex items-center">
-          <HamburgerMenuIcon className="w-4 h-4 mr-4 cursor-pointer" />
+          <SheetHeader />
           <Link href="/home">
-           <Image src='/logo.png' alt="sief logo" width={100} height={100} />
+            <Image src='/logo.png' alt="sief logo" width={100} height={100} />
           </Link>
         </div>
         <div className="flex items-center gap-4 w-full justify-end">
-          <div className="flex items-center gap-4 w-full justify-end">
+          <div className="max-[950px]:hidden flex items-center gap-4 w-full justify-end">
             <Input onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={(e) => e.key === "Enter" && e.currentTarget.value && router.push('/search?name=' + e.currentTarget.value)} placeholder="Pesquisar" className={cn("max-w-48 md:max-w-sm w-full max-[370px]:hidden max-[500px]:max-w-24", (pathname === "/" || !userId) && "hidden")} />
             <Button className={cn("p-0 w-8 h-8 max-[370px]:hidden", (pathname === "/" || !userId) && "hidden")} size={"sm"} onClick={() => {
               searchTerm && router.push('/search?name=' + searchTerm);
@@ -38,7 +39,7 @@ export default function Header(props: IHeaderProps) {
             </Button >
           </div>
           <ModeToggle />
-          <Button size={"lg"} onClick={() => window.location.href = "https://sief-integrated-financial-education.netlify.app/"}>Voltar a página inicial</Button>
+          <Button size={"lg"} onClick={() => window.location.href = "https://sief-integrated-financial-education.netlify.app/"}>Voltar ao início</Button>
           <ClerkLoading>
             <ReloadIcon className="h-5 w-5 text-muted-foreground animate-spin" />
           </ClerkLoading>

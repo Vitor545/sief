@@ -12,7 +12,7 @@ export async function GET(req: Request) {
             },
             orderBy: { ordercourse: 'asc' }
         })
-        return NextResponse.json(coursesBlocked.filter(course => course.progress.length === course.lessons.length), { status: 200 })
+        return NextResponse.json(coursesBlocked.filter(course => course.progress.length === course.lessons.length && course.progress.length !== 0), { status: 200 })
     } catch (error) {
         console.log("[COURSE]", error)
         return new NextResponse('Erro ao buscar os cursos', { status: 500 })
