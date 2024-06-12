@@ -15,7 +15,7 @@ export default async function Search({ searchParams }: { searchParams: { name: s
             progress: { orderBy: { dataconclusao: 'desc' }, where: { userid: userId } },
             lessons: { orderBy: { orderlesson: 'asc' } }
         },
-        where: { coursename: { contains: searchParams?.name } },
+        where: { coursename: { contains: searchParams?.name, mode: 'insensitive' } },
         orderBy: { ordercourse: 'asc' }
     })
     return (
