@@ -1,6 +1,6 @@
 import prisma from "@/lib/prismaClient"
 import { NextResponse } from 'next/server'
-
+export const revalidate = 0
 export async function GET(req: Request, { params: { courseId, lessonId } }: { params: { courseId: string, lessonId: string } }) {
     try {
         var commentsAll = await prisma.comments.findMany({

@@ -1,5 +1,6 @@
 import { checkRole } from "@/lib/roles"
 import { NextResponse } from 'next/server'
+export const revalidate = 0
 
 type ResponseData = {
     message: string

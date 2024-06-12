@@ -1,6 +1,7 @@
 import { Reaction } from "@/interfaces/LessonDto";
 import prisma from "@/lib/prismaClient"
 import { NextResponse } from 'next/server'
+export const revalidate = 0
 
 export async function POST(req: Request) {
     try {
